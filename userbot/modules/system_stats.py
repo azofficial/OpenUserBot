@@ -130,7 +130,7 @@ async def amireallyalive(alive):
                      f"Python: {python_version()} \n"
                      f"---------------------------------- \n"
                      " \n"
-                     f"Creator: RoyalBoyPriyanshu \n"
+                     f"Creator: @RoyalBoyPriyanshu \n"
                      f"Owner: RøyáL ẞøy꧁やℜiℽⱥήshu꧂ \n"
                      " \n"
                      f"Royal's Bot: E.D.I.T.H. \n"
