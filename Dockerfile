@@ -48,6 +48,7 @@ RUN apk add --no-cache=true --update \
     readline-dev \
     sqlite \
     ffmpeg \
+    w3m \
     libjpeg-turbo-dev \
     sqlite-dev \
     libc-dev \
@@ -77,7 +78,8 @@ RUN python3 -m ensurepip \
 RUN git clone -b sql-extended https://github.com/RoyalBoy69/OpenUserBot /root/userbot
 RUN mkdir /root/userbot/.bin
 WORKDIR /root/userbot/
-
+ENV PATH="/root/userbot/.bin:$PATH"
+WORKDIR /root/userbot/
 #
 # Copies session and config (if it exists)
 #
