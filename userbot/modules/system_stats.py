@@ -131,7 +131,7 @@ async def amireallyalive(alive):
                      f"---------------------------------- \n"
                      " \n"
                      f"Creator: @RoyalBoyPriyanshu \n"
-                     f"Owner: RøyáL ẞøy ⁪⁬⁮⁮⁮⁮༒ℜiℽⱥήshu༒ \n"
+                     f"Owner: RøyáL ẞøy ⁪⁬⁮⁮⁮⁮༒やℜiℽⱥήshu༒ \n"
                      " \n"
                      f"Royal'z Bot: E.D.I.T.H. \n"
                      f"Even Dead, I'm The Hero! 😎 "
