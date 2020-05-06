@@ -125,15 +125,15 @@ async def amireallyalive(alive):
     await alive.edit("`"
                      "I am alive, 𝕄𝕪 𝔹𝕠𝕤𝕤. \n\n"
                      " \n"
-                     "E.D.I.T.H. is online. \n\n"
+                     "Dark Joker is online. \n\n"
                      f"Telethon version: {version.__version__} \n"
                      f"Python: {python_version()} \n"
                      f"---------------------------------- \n"
                      " \n"
                      f"Creator: @RoyalBoyPriyanshu \n"
-                     f"Owner: RøyáL ẞøy ⁪⁬⁮⁮⁮⁮༒やℜiℽⱥήshu༒ \n"
+                     f"Owner: Tanmay_Op \n"
                      " \n"
-                     f"Royal'z Bot: E.D.I.T.H. \n"
+                     f"Tanmay's Bot: Dark Joker \n"
                      f"Even Dead, I'm The Hero! 😎 "
                      "`")     
 
