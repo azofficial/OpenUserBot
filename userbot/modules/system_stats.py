@@ -23,149 +23,122 @@ DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 @register(outgoing=True, pattern="^.sysd$")
 async def sysdetails(sysd):
     """ For .sysd command, get system info using neofetch. """
-    if not sysd.text[0].isalpha() and sysd.text[0] not in ("/", "#", "@", "!"):
-        try:
-            fetch = await asyncrunapp(
-                "neofetch",
-                "--stdout",
-                stdout=asyncPIPE,
-                stderr=asyncPIPE,
-            )
+    try:
+        neo = "neofetch --stdout"
+        fetch = await asyncrunapp(
+            neo,
+            stdout=asyncPIPE,
+            stderr=asyncPIPE,
+        )
 
-            stdout, stderr = await fetch.communicate()
-            result = str(stdout.decode().strip()) \
-                + str(stderr.decode().strip())
+        stdout, stderr = await fetch.communicate()
+        result = str(stdout.decode().strip()) \
+            + str(stderr.decode().strip())
 
-            await sysd.edit("`" + result + "`")
-        except FileNotFoundError:
-            await sysd.edit("`Hella install neofetch first kthx`")
+        await sysd.edit("`" + result + "`")
+    except FileNotFoundError:
+        await sysd.edit("`Install neofetch first !!`")
 
 
 @register(outgoing=True, pattern="^.botver$")
 async def bot_ver(event):
     """ For .botver command, get the bot version. """
-    if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@",
-                                                             "!"):
-        if which("git") is not None:
-            ver = await asyncrunapp(
-                "git",
-                "describe",
-                "--all",
-                "--long",
-                stdout=asyncPIPE,
-                stderr=asyncPIPE,
-            )
-            stdout, stderr = await ver.communicate()
-            verout = str(stdout.decode().strip()) \
-                + str(stderr.decode().strip())
+    if which("git") is not None:
+        invokever = "git describe --all --long"
+        ver = await asyncrunapp(
+            invokever,
+            stdout=asyncPIPE,
+            stderr=asyncPIPE,
+        )
+        stdout, stderr = await ver.communicate()
+        verout = str(stdout.decode().strip()) \
+            + str(stderr.decode().strip())
 
-            rev = await asyncrunapp(
-                "git",
-                "rev-list",
-                "--all",
-                "--count",
-                stdout=asyncPIPE,
-                stderr=asyncPIPE,
-            )
-            stdout, stderr = await rev.communicate()
-            revout = str(stdout.decode().strip()) \
-                + str(stderr.decode().strip())
+        invokerev = "git rev-list --all --count"
+        rev = await asyncrunapp(
+            invokerev,
+            stdout=asyncPIPE,
+            stderr=asyncPIPE,
+        )
+        stdout, stderr = await rev.communicate()
+        revout = str(stdout.decode().strip()) \
+            + str(stderr.decode().strip())
 
-            await event.edit("`Userbot Version: "
-                             f"{verout}"
-                             "` \n"
-                             "`Revision: "
-                             f"{revout}"
-                             "` \n"
-                             "`OUB-X Version: Super Saiyan 1`")
-        else:
-            await event.edit(
-                "Shame that you don't have Git, you're running v1.0 anyway!")
+        await event.edit("`Userbot Version: "
+                         f"{verout}"
+                         "` \n"
+                         "`Revision: "
+                         f"{revout}"
+                         "`")
+    else:
+        await event.edit(
+            "Shame that you don't have git, You're running 9.0 - 'Extended' anyway"
+        )
 
 
 @register(outgoing=True, pattern="^.pip(?: |$)(.*)")
 async def pipcheck(pip):
     """ For .pip command, do a pip search. """
-    if not pip.text[0].isalpha() and pip.text[0] not in ("/", "#", "@", "!"):
-        pipmodule = pip.pattern_match.group(1)
-        if pipmodule:
-            await pip.edit("`Searching . . .`")
-            pipc = await asyncrunapp(
-                "pip3",
-                "search",
-                pipmodule,
-                stdout=asyncPIPE,
-                stderr=asyncPIPE,
-            )
+    pipmodule = pip.pattern_match.group(1)
+    if pipmodule:
+        await pip.edit("`Searching . . .`")
+        invokepip = f"pip3 search {pipmodule}"
+        pipc = await asyncrunapp(
+            invokepip,
+            stdout=asyncPIPE,
+            stderr=asyncPIPE,
+        )
 
-            stdout, stderr = await pipc.communicate()
-            pipout = str(stdout.decode().strip()) \
-                + str(stderr.decode().strip())
+        stdout, stderr = await pipc.communicate()
+        pipout = str(stdout.decode().strip()) \
+            + str(stderr.decode().strip())
 
-            if pipout:
-                if len(pipout) > 4096:
-                    await pip.edit("`Output too large, sending as file`")
-                    file = open("output.txt", "w+")
-                    file.write(pipout)
-                    file.close()
-                    await pip.client.send_file(
-                        pip.chat_id,
-                        "output.txt",
-                        reply_to=pip.id,
-                    )
-                    remove("output.txt")
-                    return
-                await pip.edit("**Query: **\n`"
-                               f"{invokepip}"
-                               "`\n**Result: **\n`"
-                               f"{pipout}"
-                               "`")
-            else:
-                await pip.edit("**Query: **\n`"
-                               f"{invokepip}"
-                               "`\n**Result: **\n`No Result Returned/False`")
+        if pipout:
+            if len(pipout) > 4096:
+                await pip.edit("`Output too large, sending as file`")
+                file = open("output.txt", "w+")
+                file.write(pipout)
+                file.close()
+                await pip.client.send_file(
+                    pip.chat_id,
+                    "output.txt",
+                    reply_to=pip.id,
+                )
+                remove("output.txt")
+                return
+            await pip.edit("**Query: **\n`"
+                           f"{invokepip}"
+                           "`\n**Result: **\n`"
+                           f"{pipout}"
+                           "`")
         else:
-            await pip.edit("`Use .help pip to see an example`")
-            
+            await pip.edit("**Query: **\n`"
+                           f"{invokepip}"
+                           "`\n**Result: **\n`No Result Returned/False`")
+    else:
+        await pip.edit("`Use .help pip to see an example`")
+
 
 @register(outgoing=True, pattern="^.alive$")
 async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
     await alive.edit(
-            
-      
-         f"--------------------------------------------------------\n"
-        "⣼⣯⠄⣸⣠⣶⣶⣦⣾⠄⠄⠄⠄⡀⠄⢀⣿⣿⠄⠄⠄⢸⡇  \n"
-         "⠿⠿⠶⠿⢿⣿⣿⣿⣿⣦⣤⣄⢀⡅⢠⣾⣛⡉⠄⠄⠄⠸⢀ \n"
-         "⣴⣶⣶⡀⠄⠄⠙⢿⣿⣿⣿⣿⣿⣴⣿⣿⣿⢃⣤⣄⣀⣥⣿ \n"
-         "⣿⣿⣿⣧⣀⢀⣠⡌⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⣿⣿ \n"
-         "⣤⣤⣤⣬⣙⣛⢿⣿⣿⣿⣿⣿⣿⡿⣿⣿⡍⠄⠄⢀⣤⣄⠉ \n"
-         "⣿⣿⣿⣿⣿⣿⣿⢿⣿⣿⣿⣿⣿⢇⣿⣿⡷⠶⠶⢿⣿⣿⠇ \n"
-         "⣿⣿⣿⣿⣿⣿⣿⣿⣽⣿⣿⣿⡇⣿⣿⣿⣿⣿⣿⣷⣶⣥⣴ \n"
-         "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ \n"
-         "⣻⣿⣿⣧⠙⠛⠛⡭⠅⠒⠦⠭⣭⡻⣿⣿⣿⣿⣿⣿⣿⣿⡿ \n"
-         "⣿⣿⣿⣿⡆⠄⠄⠄⠄⠄⠄⠄⠄⠹⠈⢋⣽⣿⣿⣿⣿⣵⣾ \n"
-         "⣿⣿⣿⣿⣿⠄⣴⣿⣶⣄⠄⣴⣶⠄⢀⣾⣿⣿⣿⣿⣿⣿⠃ \n"
-         "⣿⣿⣿⣿⣿⡄⢻⣿⣿⣿⠄⣿⣿⡀⣾⣿⣿⣿⣿⣛⠛⠁⠄ \n"
-         "⠛⢿⣿⣿⣿⠁⠞⢿⣿⣿⡄⢿⣿⡇⣸⣿⣿⠿⠛⠁⠄⠄⠄ \n"
-         "⠄⠄⠉⠻⣿⣿⣾⣦⡙⠻⣷⣾⣿⠃⠿⠋⠁⠄⠄⠄⠄⠄⢀ \n"
-         "⣮⣥⣒⠲⢮⣝⡿⣿⣿⡆⣿⡿⠃⠄⠄⠄⠄⠄⠄⠄⣠⣴⣿ \n"
-       f"--------------------------------------------------------\n"
-        "         𝕀'𝕄 𝔸𝕋 𝕐𝕆𝕌ℝ 𝕊𝔼ℝ𝕍𝕀ℂ𝔼 \n"
-        f"🤴 𝕄𝕐 𝕄𝔸𝕊𝕋𝔼ℝ: {DEFAULTUSER} \n"
-  f"============================\n"
-      
-        f"🔧` Telethon: v{version.__version__}` \n"
-        f"🐍` Python: v{python_version()}` \n"
-        f"🤙` Owner:`  TanmayOp \n"
-        f"✴️` Userbot:`   [OpenUserBot](https://github.com/TanmayOp/OpenUserBot)\n"               
-        f"============================\n"
-        
-        )
-        
-        
-                   
+                     "✯𝓘'𝓜 𝓐𝓣 𝓨𝓞𝓤𝓡 𝓢𝓔𝓡𝓥𝓘𝓒𝓔 𝓜𝓨 𝓜𝓐𝓢𝓣𝓔𝓡✯ \n"
+                      
+                     f"`🤖 STATUS: C.H.A.R.L.I is Awake ✅` \n"
+                     f"Telethon version:{version.__version__} \n"
+                     f"Python version🐍:{python_version()} \n"
+                     f"`Bot Version🤘: C.H.A.R.L.I 2.0` \n"
+                     f"------------------------------------ \n"
+                     
+                     f"User 👨‍🚀:{DEFAULTUSER} \n"
+                     f"Maintainer 🏄‍♂️: @Tanmay_Op_V2 \n"
+                     f"Admin 👑:{DEFAULTUSER} \n"
+                     f"Userbot 😎: OpenUserBot \n"
+                     f"Repo 📥:https://github.com/TanmayOp/OpenUserBot.git"
+                     )    
 
+    
 
 @register(outgoing=True, pattern="^.aliveu")
 async def amireallyaliveuser(username):
