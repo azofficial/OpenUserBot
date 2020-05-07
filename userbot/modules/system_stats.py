@@ -124,7 +124,7 @@ async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
     await alive.edit(
                      "✯𝓘'𝓜 𝓐𝓣 𝓨𝓞𝓤𝓡 𝓢𝓔𝓡𝓥𝓘𝓒𝓔 𝓜𝓨 𝓜𝓐𝓢𝓣𝓔𝓡✯ \n"
-                      
+                     f"=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+ \n" 
                      f"`🤖 STATUS: C.H.A.R.L.I is Awake ✅` \n"
                      f"Telethon version:{version.__version__} \n"
                      f"Python version🐍:{python_version()} \n"
