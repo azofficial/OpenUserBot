@@ -123,16 +123,16 @@ async def pipcheck(pip):
 async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
     await alive.edit(
-                     "✯𝓘'𝓜 𝓐𝓣 𝓨𝓞𝓤𝓡 𝓢𝓔𝓡𝓥𝓘𝓒𝓔 𝓜𝓨 𝓜𝓐𝓢𝓣𝓔𝓡✯ \n"
-                     f"=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+ \n" 
-                     f"`🤖 STATUS: C.H.A.R.L.I is Awake ✅` \n"
+                     "♛𝕀'𝕄 𝔸𝕋 𝕐𝕆𝕌ℝ 𝕊𝔼ℝ𝕍𝕀ℂ𝔼 𝕄𝕐 𝕄𝔸𝕊𝕋𝔼ℝ♛ \n"
+                     f"=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+= \n" 
+                     f"`🤖 STATUS: C.H.A.R.L.I is Awake✅` \n"
                      f"Telethon version:{version.__version__} \n"
                      f"Python version🐍:{python_version()} \n"
                      f"`Bot Version🤘: C.H.A.R.L.I 2.0` \n"
                      f"------------------------------------ \n"
                      
                      f"User 👨‍🚀:{DEFAULTUSER} \n"
-                     f"Maintainer 🏄‍♂️: @Tanmay_Op_V2 \n"
+                     f"Maintainer 🏄‍♂️: Tanmay_Op \n"
                      f"Admin 👑:{DEFAULTUSER} \n"
                      f"Userbot 😎: OpenUserBot \n"
                      f"Repo 📥:https://github.com/TanmayOp/OpenUserBot.git"
