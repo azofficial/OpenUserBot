@@ -42,5 +42,5 @@ async def timer_blankx(e):
 
  if e.pattern_match.group(1) == 'f':
 
-  await e.edit("`Tesla Wireless Charging (beta) Completed...\nDevice Detected: Asus Max Pro M1 (Space Grey Varient)\nBattery Percentage:` [100%](https://telegra.ph/file/a45aa7450c8eefed599d9.mp4) ", link_preview=True)
+  await e.edit("`Tesla Wireless Charging (beta) Completed...\nDevice Detected: Asus Max Pro M1 \nBattery Percentage:` [100%](https://telegra.ph/file/a45aa7450c8eefed599d9.mp4) ", link_preview=True)
 
